@@ -1,34 +1,12 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import {
-  Container,
-  CssBaseline,
   Typography,
   TextField,
   Button,
   Link,
   Grid,
 } from "@material-ui/core";
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%",
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+import { useStyles } from "../styledcomponents";
 
 const Register = () => {
   const classes = useStyles();
@@ -81,10 +59,7 @@ const Register = () => {
   // };
 
   return (
-    <Container component="main" maxWidth="xs">
-      {/* <Button onClick={handleSubmit}>Click Here</Button> */}
-      <CssBaseline />
-      <div className={classes.paper}>
+      <>
         <Typography component="h1" variant="h5">
           Register
         </Typography>
@@ -150,8 +125,7 @@ const Register = () => {
             </Grid>
           </Grid>
         </form>
-      </div>
-    </Container>
+      </>
   );
 };
 
