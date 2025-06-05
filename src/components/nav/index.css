@@ -1,0 +1,9 @@
+.toolBar {
+  display: flex;
+  justify-content: flex-end !important;
+  margin-left: auto;
+}
+
+.toolBarBtns {
+  color: white !important;
+}
