@@ -1,14 +1,17 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "../login";
-import Register from "../register";
+import Signup from "../signup";
 import ProductList from "../product/productList";
 import AddProduct from "../product/addProduct";
 import UpdateProduct from "../product/updateProduct";
 import { Container, CssBaseline } from "@material-ui/core";
 import { useStyles } from "../styledcomponents";
+import Home from "../home";
 
 const Main = () => {
   const classes = useStyles();
+  const auth = localStorage.getItem("user");
+
   return (
     <div
       style={{
@@ -21,11 +24,19 @@ const Main = () => {
         <CssBaseline />
         <div className={classes.paper}>
           <Routes>
-            <Route path="/" element={<ProductList />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/addproduct" element={<AddProduct />} />
-            <Route path="/updateproduct" element={<UpdateProduct />} />
+            {auth ? (
+              <>
+                <Route path="/productlist" element={<ProductList />} />
+                <Route path="/addproduct" element={<AddProduct />} />
+                <Route path="/updateproduct" element={<UpdateProduct />} />
+              </>
+            ) : (
+              <>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+              </>
+            )}
           </Routes>
         </div>
       </Container>

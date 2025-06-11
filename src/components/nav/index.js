@@ -1,40 +1,54 @@
 import { useState, useEffect } from "react";
 import { AppBar, Tab, Tabs, Toolbar } from "@material-ui/core";
-import { tabsData } from "../../constants/tabs";
+import { publicTabData, privateTabData } from "../../constants/tabs";
 import { useLocation, useNavigate } from "react-router-dom";
+import MernLogo from "../../images/MERN-Logo.png";
 
 const NavBar = () => {
-  // const [data, setData] = useState(null);
   const [currentTab, setCurrentTab] = useState();
   const navigate = useNavigate();
   const location = useLocation();
-
+  const auth = localStorage.getItem("user");
 
   useEffect(() => {
     setCurrentTab(location.pathname);
   }, [location.pathname]);
 
-
-  useEffect(() => {
-    // Make the API call when the component mounts
-    // fetch('http://localhost:5000/api/data')
-    //   .then((response) => response.json())
-    //   .then((data) => setData(data))
-    //   .catch((error) => console.error('Error fetching data:', error));
-  }, []);
-
   const handleChange = (_, newVal) => {
-    setCurrentTab(newVal);
-    navigate(newVal)
-    // navigate(tabsData[newVal].path);
+    if (newVal === "") {
+      localStorage.clear();
+      navigate("/");
+    } else {
+      setCurrentTab(newVal);
+      navigate(newVal);
+    }
   };
 
   return (
     <div style={{ padding: "10px 20px" }}>
       <AppBar>
-        <Toolbar>
+        <Toolbar
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <div style={{ display: "flex" }}>
+            <span style={{ padding: "6px", marginTop: "13px" }}>LEARN</span>
+            <img
+              src={MernLogo}
+              alt="logo"
+              style={{
+                marginLeft: "10px",
+                borderRadius: "50%",
+                width: "68px",
+                height: "56px",
+              }}
+            />
+          </div>
           <Tabs value={currentTab} onChange={handleChange}>
-            {tabsData.map((tab, index) => (
+            {(auth ? privateTabData : publicTabData).map((tab, index) => (
               <Tab key={index} label={tab.label} value={tab.path} />
             ))}
           </Tabs>
