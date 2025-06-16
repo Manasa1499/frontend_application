@@ -11,11 +11,12 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useStyles } from "../styledcomponents";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = (props) => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { setCurrentTab } = props;
 
   const handleSubmit = (e) => {
     console.log({ email, password });
@@ -30,8 +31,8 @@ const Login = () => {
       .then(async (resp) => {
         const userData = await resp.json();
         localStorage.setItem("user", JSON.stringify(userData));
-
-        navigate("/");
+        navigate("/productlist");
+        setCurrentTab("/productlist");
         // Need to toaster for error and success
       })
       .catch((error) => console.log(error));

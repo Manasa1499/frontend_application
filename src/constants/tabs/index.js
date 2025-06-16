@@ -3,7 +3,7 @@ export const privateTabData = [
   { label: "Add Product", path: "/addproduct" },
   { label: "Update Product", path: "/updateproduct" },
   { label: "Profile", path: "/profile" },
-  { label: "Logout", path: "" },
+  { label: "Logout", path: "/" },
 ];
 
 export const publicTabData = [

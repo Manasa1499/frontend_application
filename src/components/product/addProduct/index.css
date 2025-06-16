@@ -1,0 +1,13 @@
+.inputBox {
+  margin: 5px;
+  width: 250px;
+  height: 30px;
+  border: 1px solid black;
+}
+
+.addProductBtn {
+  margin: 5px;
+  width: 150px;
+  height: 30px;
+  border: 1px solid black;
+}

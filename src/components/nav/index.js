@@ -1,27 +1,18 @@
-import { useState, useEffect } from "react";
 import { AppBar, Tab, Tabs, Toolbar } from "@material-ui/core";
 import { publicTabData, privateTabData } from "../../constants/tabs";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MernLogo from "../../images/MERN-Logo.png";
 
-const NavBar = () => {
-  const [currentTab, setCurrentTab] = useState();
+const NavBar = (props) => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const auth = localStorage.getItem("user");
-
-  useEffect(() => {
-    setCurrentTab(location.pathname);
-  }, [location.pathname]);
+  const { isAuthenticated, setCurrentTab, currentTab } = props;
 
   const handleChange = (_, newVal) => {
-    if (newVal === "") {
+    if (newVal === "/") {
       localStorage.clear();
-      navigate("/");
-    } else {
-      setCurrentTab(newVal);
-      navigate(newVal);
     }
+    setCurrentTab(newVal);
+    navigate(newVal);
   };
 
   return (
@@ -48,9 +39,11 @@ const NavBar = () => {
             />
           </div>
           <Tabs value={currentTab} onChange={handleChange}>
-            {(auth ? privateTabData : publicTabData).map((tab, index) => (
-              <Tab key={index} label={tab.label} value={tab.path} />
-            ))}
+            {(isAuthenticated ? privateTabData : publicTabData).map(
+              (tab, index) => (
+                <Tab key={index} label={tab.label} value={tab.path} />
+              )
+            )}
           </Tabs>
         </Toolbar>
       </AppBar>

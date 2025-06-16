@@ -8,9 +8,9 @@ import { Container, CssBaseline } from "@material-ui/core";
 import { useStyles } from "../styledcomponents";
 import Home from "../home";
 
-const Main = () => {
+const Main = (props) => {
+  const { isAuthenticated, setCurrentTab } = props;
   const classes = useStyles();
-  const auth = localStorage.getItem("user");
 
   return (
     <div
@@ -24,7 +24,7 @@ const Main = () => {
         <CssBaseline />
         <div className={classes.paper}>
           <Routes>
-            {auth ? (
+            {isAuthenticated ? (
               <>
                 <Route path="/productlist" element={<ProductList />} />
                 <Route path="/addproduct" element={<AddProduct />} />
@@ -33,7 +33,10 @@ const Main = () => {
             ) : (
               <>
                 <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
+                <Route
+                  path="/login"
+                  element={<Login setCurrentTab={setCurrentTab} />}
+                />
                 <Route path="/signup" element={<Signup />} />
               </>
             )}
