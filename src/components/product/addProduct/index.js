@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./index.css";
+import "../index.css";
 
 const AddProduct = () => {
   const [formData, setFormData] = useState({
@@ -73,7 +73,7 @@ const AddProduct = () => {
           required
         />
 
-        <button className="addProductBtn" type="submit">
+        <button className="productBtn" type="submit">
           Add Product
         </button>
       </form>

@@ -28,7 +28,7 @@ const Main = (props) => {
               <>
                 <Route path="/productlist" element={<ProductList />} />
                 <Route path="/addproduct" element={<AddProduct />} />
-                <Route path="/updateproduct" element={<UpdateProduct />} />
+                <Route path="/updateproduct/:id" element={<UpdateProduct />} />
               </>
             ) : (
               <>

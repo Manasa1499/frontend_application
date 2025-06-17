@@ -1,0 +1,30 @@
+.inputBox {
+  margin: 5px;
+  width: 250px;
+  height: 30px;
+  border: 1px solid black;
+}
+
+.productBtn {
+  margin: 5px;
+  width: 150px;
+  height: 30px;
+  border: 1px solid black;
+}
+
+.productList {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.productList ul {
+  display: flex;
+  margin: 0;
+}
+
+.productList ul li {
+  display: inline-block;
+  width: 150px;
+  border: 1px solid skyblue;
+  padding: 10px;
+}
