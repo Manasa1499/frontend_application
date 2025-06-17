@@ -12,11 +12,12 @@ const Signup = () => {
 
   const handleSubmit = () => {
     console.log({ name, email, password });
-
+    const token = "bearer "+JSON.parse(localStorage.getItem("authToken"));
     fetch("http://localhost:5000/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        authorization: token,
       },
       body: JSON.stringify({ name, email, password }),
     })

@@ -17,7 +17,12 @@ const UpdateProduct = () => {
   }, []);
 
   const getProductDetails = async () => {
-    const resp = await fetch("http://localhost:5000/productById/" + params.id);
+    const token = "bearer "+JSON.parse(localStorage.getItem("authToken"));
+    const resp = await fetch("http://localhost:5000/productById/" + params.id, {
+      headers: {
+        authorization: token,
+      },
+    });
     const data = await resp.json();
     setFormData({
       name: data.name,
@@ -34,9 +39,10 @@ const UpdateProduct = () => {
   };
 
   const handleUpdateProduct = () => {
+    const token = "bearer "+JSON.parse(localStorage.getItem("authToken"));
     fetch("http://localhost:5000/updateProduct/" + params.id, {
       method: "Put",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", authorization: token },
       body: JSON.stringify(formData),
     }).then(() => {
       setFormData({ name: "", price: "", category: "", company: "" });

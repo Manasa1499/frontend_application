@@ -14,7 +14,7 @@
 
 .productList {
   text-align: center;
-  margin-top: 50px;
+  /* margin-top: 50px; */
 }
 
 .productList ul {
@@ -27,4 +27,12 @@
   width: 150px;
   border: 1px solid skyblue;
   padding: 10px;
+}
+
+.searchInput {
+  margin: 20px;
+  width: 400px;
+  height: 40px;
+  padding-left: 30px;
+  border: 2px solid skyblue;
 }

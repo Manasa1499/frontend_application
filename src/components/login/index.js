@@ -20,7 +20,6 @@ const Login = (props) => {
 
   const handleSubmit = (e) => {
     console.log({ email, password });
-
     fetch("http://localhost:5000/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
@@ -30,7 +29,8 @@ const Login = (props) => {
     })
       .then(async (resp) => {
         const userData = await resp.json();
-        localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem("user", JSON.stringify(userData.user));
+        localStorage.setItem("authToken", JSON.stringify(userData.token));
         navigate("/productlist");
         setCurrentTab("/productlist");
         // Need to toaster for error and success

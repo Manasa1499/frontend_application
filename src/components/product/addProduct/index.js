@@ -17,10 +17,10 @@ const AddProduct = () => {
   const handleAddProduct = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     const productData = { ...formData, userId: user._id };
-
+    const token = "bearer "+JSON.parse(localStorage.getItem("authToken"));
     fetch("http://localhost:5000/add-product", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", authorization: token },
       body: JSON.stringify(productData),
     }).then(() => {
       setFormData({ name: "", price: "", category: "", company: "" });
