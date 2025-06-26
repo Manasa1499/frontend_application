@@ -1,4 +1,4 @@
-import { AppBar, Tab, Tabs, Toolbar } from "@material-ui/core";
+import { AppBar, Tab, Tabs, Toolbar } from "@mui/material";
 import { publicTabData, privateTabData } from "../../constants/tabs";
 import { useNavigate } from "react-router-dom";
 import MernLogo from "../../images/MERN-Logo.png";
@@ -14,7 +14,7 @@ const NavBar = (props) => {
     setCurrentTab(newVal);
     navigate(newVal);
   };
-
+  
   return (
     <div style={{ padding: "10px 20px" }}>
       <AppBar>
@@ -41,7 +41,13 @@ const NavBar = (props) => {
           <Tabs value={currentTab} onChange={handleChange}>
             {(isAuthenticated ? privateTabData : publicTabData).map(
               (tab, index) => (
-                <Tab key={index} label={tab.label} value={tab.path} />
+                // borderBottom is not updating
+                <Tab
+                  style={{ borderBottom: currentTab === tab.path ? "2px solid black" : "", color: "White" }}
+                  key={index}
+                  label={tab.label}
+                  value={tab.path}
+                />
               )
             )}
           </Tabs>

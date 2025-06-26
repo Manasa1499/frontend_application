@@ -4,13 +4,12 @@ import Signup from "../signup";
 import ProductList from "../product/productList";
 import AddProduct from "../product/addProduct";
 import UpdateProduct from "../product/updateProduct";
-import { Container, CssBaseline } from "@material-ui/core";
-import { useStyles } from "../styledcomponents";
+import { Container, CssBaseline } from "@mui/material";
 import Home from "../home";
+import ProtectedRoutes from "./privateRoute";
 
 const Main = (props) => {
   const { isAuthenticated, setCurrentTab } = props;
-  const classes = useStyles();
 
   return (
     <div
@@ -22,21 +21,33 @@ const Main = (props) => {
     >
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <div className={classes.paper}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: "100px"
+          }}
+        >
           <Routes>
+            <Route
+              path="/login"
+              element={<Login setCurrentTab={setCurrentTab} />}
+            />
+            <Route
+              path="/"
+              element={<Home isAuthenticated={isAuthenticated} />}
+            />
             {isAuthenticated ? (
-              <>
+              <Route
+                element={<ProtectedRoutes isAuthenticated={isAuthenticated} />}
+              >
                 <Route path="/productlist" element={<ProductList />} />
                 <Route path="/addproduct" element={<AddProduct />} />
                 <Route path="/updateproduct/:id" element={<UpdateProduct />} />
-              </>
+              </Route>
             ) : (
               <>
-                <Route path="/" element={<Home />} />
-                <Route
-                  path="/login"
-                  element={<Login setCurrentTab={setCurrentTab} />}
-                />
                 <Route path="/signup" element={<Signup />} />
               </>
             )}

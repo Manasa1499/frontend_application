@@ -1,31 +1,29 @@
-import React, { useState } from "react";
-import { Typography, TextField, Button, Link, Grid } from "@material-ui/core";
-import { useStyles } from "../styledcomponents";
+import { useState } from "react";
+import { Typography, TextField, Button, Link, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import _ from "loadsh";
+import { toast } from "react-toastify";
+import { postAPI } from "../../api";
 
 const Signup = () => {
-  const classes = useStyles();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    console.log({ name, email, password });
-    const token = "bearer "+JSON.parse(localStorage.getItem("authToken"));
-    fetch("http://localhost:5000/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: token,
-      },
-      body: JSON.stringify({ name, email, password }),
-    })
-      .then(() => {
-        navigate("/");
-        // need to show popup that sign up successfully
-      })
-      .catch((error) => console.log(error));
+  const handleSubmit = async () => {
+    try {
+      const resp = await postAPI("/signup", { name, email, password });
+      const data = await resp.json();
+      if (!_.isEmpty(data.name) && !_.isEmpty(data.email)) {
+        navigate("/login");
+        toast.success("Signup successful!");
+      } else {
+        toast.error(data.result);
+      }
+    } catch (err) {
+      toast.error("Something went wrong, Please check the server connection");
+    }
   };
 
   return (
@@ -33,7 +31,7 @@ const Signup = () => {
       <Typography component="h1" variant="h5">
         Signup
       </Typography>
-      <form className={classes.form}>
+      <form style={{ width: "100%", marginTop: "20px" }}>
         <TextField
           variant="outlined"
           margin="normal"
@@ -77,12 +75,12 @@ const Signup = () => {
           fullWidth
           variant="contained"
           color="primary"
-          className={classes.submit}
+          style={{ margin: "10px" }}
           onClick={handleSubmit}
         >
           Signup
         </Button>
-        <Grid container>
+        <Grid container spacing={2}>
           <Grid item xs>
             <Link href="#" variant="body2">
               Forgot password?

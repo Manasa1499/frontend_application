@@ -6,41 +6,41 @@ import {
   Button,
   Link,
   Grid,
-} from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { useStyles } from "../styledcomponents";
+} from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useNavigate } from "react-router-dom";
+import _ from "loadsh";
+import { toast } from "react-toastify";
+import { postAPI } from "../../api";
 
 const Login = (props) => {
-  const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { setCurrentTab } = props;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     console.log({ email, password });
-    fetch("http://localhost:5000/login", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then(async (resp) => {
-        const userData = await resp.json();
+    try {
+      const resp = await postAPI("/login", { email, password });
+      const userData = await resp.json();
+      if (resp.status === 200 && !_.isEmpty(userData.user)) {
+        toast.success("Login successful!");
         localStorage.setItem("user", JSON.stringify(userData.user));
         localStorage.setItem("authToken", JSON.stringify(userData.token));
         navigate("/productlist");
         setCurrentTab("/productlist");
-        // Need to toaster for error and success
-      })
-      .catch((error) => console.log(error));
+      } else {
+        toast.error(userData.result);
+      }
+    } catch (err) {
+      toast.error("Something went wrong, Please check the server connection");
+    }
   };
 
   return (
     <>
-      <Avatar className={classes.avatar}>
+      <Avatar style={{ margin: "10px" }}>
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
@@ -76,12 +76,12 @@ const Login = (props) => {
         fullWidth
         variant="contained"
         color="primary"
-        className={classes.submit}
+        style={{ margin: "10px" }}
         onClick={handleSubmit}
       >
         Login
       </Button>
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item xs>
           <Link href="#" variant="body2">
             Forgot password?
